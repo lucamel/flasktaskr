@@ -1,0 +1,96 @@
+{% extends "_base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <h3>Add a new task:</h3>
+        <form class="form-inline" action="{{ url_for('new_task') }}" method="post">
+            <div class="form-group">
+                <label for="name">Task name:&nbsp</label>
+                <input class="form-control" type="text" id="name" name="name">
+            </div>
+            <div class="form-group">
+                <label for="due_date">Due date (dd/mm/yyyy):&nbsp</label>
+                <input class="form-control" type="text" id="due_date" name="due_date">
+            </div>
+            <div class="form-group">
+                <label for="priority">Priority:&nbsp</label>
+                <select name="priority" id="priority" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="6">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <h2>Open Tasks</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Due date</th>
+                    <th>Priority</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in open_tasks %}
+                <tr>
+                    <td>{{ task.name }}</td>
+                    <td>{{ task.due_date }}</td>
+                    <td>{{ task.priority }}</td>
+                    <td>
+                        <a class="btn btn-xs btn-success" href="{{ url_for('complete', task_id = task.task_id) }}">Complete</a>
+                        <a class="btn btn-xs btn-danger" href="{{ url_for('delete', task_id = task.task_id) }}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <hr/>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <h2>Closed Tasks</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Due date</th>
+                    <th>Priority</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in closed_tasks %}
+                <tr>
+                    <td>{{ task.name }}</td>
+                    <td>{{ task.due_date }}</td>
+                    <td>{{ task.priority }}</td>
+                    <td>
+                        <a class="btn btn-xs btn-danger" href="{{ url_for('delete', task_id = task.task_id) }}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

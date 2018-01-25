@@ -14,15 +14,16 @@
                 </a>
             </div>
             <div>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Link</a></li>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if session['logged_in'] %}
+                        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
     <div class="container">
-        {% for message, category in get_flashed_messages() %}
+        {% for category, message in get_flashed_messages(with_categories=true) %}
         <div class="row">
             <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
         </div>
