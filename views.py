@@ -1,8 +1,9 @@
+# project/views.py
 
 import sqlite3
 from functools import wraps
 
-from flask import Flask, flash, redirect, render_remplate, request, session, url_for
+from flask import Flask, flash, redirect, render_template, request, session, url_for
 
 # config
 
@@ -37,8 +38,8 @@ def login():
     status_code = 200
     if request.method == 'POST':
         if request.form['username'] != app.config['USERNAME'] or request.form['password'] != app.config['PASSWORD']:
-            error = 'Invalid credential. Please try again.'
-            return render_template('login.html', error = error)
+            flash('Invalid credential. Please try again.', 'error')
+            return render_template('login.html')
         else:
             session['logged_in'] = True
             flash('Welcome!')
