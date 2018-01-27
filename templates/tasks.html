@@ -4,6 +4,7 @@
     <div class="col-md-10 col-md-offset-1">
         <h3>Add a new task:</h3>
         <form class="form-inline" action="{{ url_for('new_task') }}" method="post">
+            {{ form.csrf_token }}
             <div class="form-group">
                 <label for="name">Task name:&nbsp</label>
                 <input class="form-control" type="text" id="name" name="name">
@@ -41,7 +42,9 @@
                 <tr>
                     <th>Name</th>
                     <th>Due date</th>
+                    <th>Posted date</th>
                     <th>Priority</th>
+                    <th>Posted by</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -50,7 +53,9 @@
                 <tr>
                     <td>{{ task.name }}</td>
                     <td>{{ task.due_date }}</td>
+                    <td>{{ task.posted_date }}</td>
                     <td>{{ task.priority }}</td>
+                    <td>{{ task.poster.name }}</td>
                     <td>
                         <a class="btn btn-xs btn-success" href="{{ url_for('complete', task_id = task.task_id) }}">Complete</a>
                         <a class="btn btn-xs btn-danger" href="{{ url_for('delete', task_id = task.task_id) }}">Delete</a>

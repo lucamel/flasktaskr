@@ -1,14 +1,24 @@
-import sqlite3
+# project/db_create.py
+
+from views import db
 from _config import DATABASE_PATH
+
+import sqlite3
+from datetime import datetime
+
 
 with sqlite3.connect(DATABASE_PATH) as connection:
     c = connection.cursor()
 
-    c.execute('''create table tasks(task_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-        name TEXT NOT NULL, due_date TEXT NOT NULL, priority INTEGER NOT NULL, status INTEGER NOT NULL)''')
+    c.execute('alter table tasks rename to old_tasks')
 
-    c.execute('''insert into tasks (name, due_date, priority, status)
-        values('Finish this turorial', '25/01/2018', 10, 1)''')
+    # create the database and the table
+    db.create_all()
 
-    c.execute('''insert into tasks (name, due_date, priority, status)
-        values('Finish Real Python Course 2', '25/01/2018', 10, 1)''')
+    c.execute('select name, due_date, priority, status from old_tasks order by task_id asc')
+
+    data = [(row[0], row[1], row[2], row[3], datetime.now(), 1) for row in c.fetchall()]
+
+    c.executemany('insert into tasks(name, due_date, priority, status, posted_date, user_id) values(?, ?, ?, ?, ?, ?)', data)
+
+    c.execute('drop table old_tasks')

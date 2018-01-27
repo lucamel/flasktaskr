@@ -10,7 +10,7 @@
     <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Please log in to access your blog.
+                Please register to access task list.
             </div>
             <div class="panel-body">
                 <form action="" method="POST" class="form-horizontal">
@@ -22,19 +22,31 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        {{ form.email.label(class_="col-md-4 control-label") }}
+                        <div class="col-md-6">
+                            {{ form.email(class_="form-control") }}
+                        </div>
+                    </div>
+                    <div class="form-group">
                         {{ form.password.label(class_="col-md-4 control-label") }}
                         <div class="col-md-6">
                             {{ form.password(class_="form-control") }}
                         </div>
                     </div>
                     <div class="form-group">
+                        {{ form.confirm.label(class_="col-md-4 control-label") }}
+                        <div class="col-md-6">
+                            {{ form.confirm(class_="form-control") }}
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-md-6 col-md-offset-4">
-                            <button class="btn btn-primary" type="submit">Log in</button>
+                            <button class="btn btn-primary" type="submit">Register</button>
                         </div>
                     </div>
                 </form>
                 <div>
-                    <p><em>Not yet registered? </em> <a href="{{ url_for('register') }}">Sign up!</a></p>
+                    <p><em>Already registered?</em> Click <a href="/">here</a> to login.</p>
                 </div>
             </div>
         </div>
