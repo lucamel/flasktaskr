@@ -2,31 +2,38 @@
 {% block content %}
 <div class="row">
     <div class="col-md-10 col-md-offset-1">
-        <h3>Add a new task:</h3>
-        <form class="form-inline" action="{{ url_for('new_task') }}" method="post">
+        <h3>Add a new task: {{ error }}</h3>
+        <form class="form-inline" action="" method="post">
             {{ form.csrf_token }}
-            <div class="form-group">
-                <label for="name">Task name:&nbsp</label>
-                <input class="form-control" type="text" id="name" name="name">
+            <div class="form-group {{ 'has-error' if form.name.errors }}">
+                {{ form.name(class_="form-control", placeholder="Task name") }}
+                {% if form.name.errors %}
+                <span class="text-danger">
+                    {% for error in form.name.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
+                {% endif %}
             </div>
-            <div class="form-group">
-                <label for="due_date">Due date (dd/mm/yyyy):&nbsp</label>
-                <input class="form-control" type="text" id="due_date" name="due_date">
+            <div class="form-group {{ 'has-error' if form.due_date.errors }}">
+                {{ form.due_date(class_="form-control", placeholder="Due_date (dd/mm/yyyy)") }}
+                {% if form.due_date.errors %}
+                <span class="text-danger">
+                    {% for error in form.due_date.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
+                {% endif %}
             </div>
-            <div class="form-group">
-                <label for="priority">Priority:&nbsp</label>
-                <select name="priority" id="priority" class="form-control">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="6">9</option>
-                    <option value="10">10</option>
-                </select>
+            <div class="form-group {{ 'has-error' if form.priority.errors }}">
+                {{ form.priority(class_="form-control", placeholder="Priority") }}
+                {% if form.priority.errors %}
+                <span class="text-danger">
+                    {% for error in form.priority.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
+                {% endif %}
             </div>
             <div class="form-group">
                 <button class="btn btn-primary" type="submit">Save</button>
