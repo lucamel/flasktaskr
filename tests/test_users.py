@@ -1,12 +1,12 @@
 
-# project/test_users.py
+# tests/test_users.py
 
 import os
 import unittest
 
-from views import app, db
-from _config import basedir
-from models import User
+from project import app, db
+from project._config import basedir
+from project.models import User
 
 TEST_DB = 'test.db'
 
@@ -81,6 +81,13 @@ class UsersTests(unittest.TestCase):
         response = self.app.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Please log in to access your blog.', response.data)
+
+    def test_logged_in_users_cannot_access_login_page(self):
+        user = self.create_user()
+        self.login(user.name, user.password)
+        response = self.app.get('/', follow_redirects = True)
+        self.assertNotIn(b'Please log in to access your blog.', response.data)
+        self.assertIn(b'Open Tasks', response.data)
 
     def test_registered_user_can_login(self):
         self.register('johndoe', 'john@example.com', 'mypassword', 'mypassword')

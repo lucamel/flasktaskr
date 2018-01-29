@@ -1,11 +1,11 @@
 
-# project/db_migrate.py
-
-from views import db
-from _config import DATABASE_PATH
+# db_migrate.py
 
 import sqlite3
 from datetime import datetime
+
+from project import db
+from project._config import DATABASE_PATH
 
 
 # with sqlite3.connect(DATABASE_PATH) as connection:

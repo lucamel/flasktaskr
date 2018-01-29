@@ -64,8 +64,8 @@
                     <td>{{ task.priority }}</td>
                     <td>{{ task.poster.name }}</td>
                     <td>
-                        <a class="btn btn-xs btn-success" href="{{ url_for('complete', task_id = task.task_id) }}">Complete</a>
-                        <a class="btn btn-xs btn-danger" href="{{ url_for('delete', task_id = task.task_id) }}">Delete</a>
+                        <a class="btn btn-xs btn-success" href="{{ url_for('tasks.complete', task_id = task.task_id) }}">Complete</a>
+                        <a class="btn btn-xs btn-danger" href="{{ url_for('tasks.delete', task_id = task.task_id) }}">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -99,7 +99,7 @@
                     <td>{{ task.priority }}</td>
                     <td>{{ task.poster.name }}</td>
                     <td>
-                        <a class="btn btn-xs btn-danger" href="{{ url_for('delete', task_id = task.task_id) }}">Delete</a>
+                        <a class="btn btn-xs btn-danger" href="{{ url_for('tasks.delete', task_id = task.task_id) }}">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}
