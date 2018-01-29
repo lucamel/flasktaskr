@@ -58,6 +58,7 @@ def logout():
     flash('Goodbye {}...'.format(user.name), 'info')
     session.pop('logged_in', None)
     session.pop('user_id', None)
+    session.pop('role', None)
     return redirect(url_for('login'))
 
 # Register
@@ -94,12 +95,11 @@ def login():
             if user is not None and user.password == request.form['password']:
                 session['logged_in'] = True
                 session['user_id'] = user.user_id
+                session['role'] = user.role
                 flash('Welcome, {}!'.format(user.name), 'success')
                 return redirect(url_for('tasks'))
             else:
                 error = 'Invalid credential. Please try again.'
-        else:
-            error = 'Both fields are required.'
     return render_template('login.html', form = form, error = error)
 
 # Show tasks
@@ -140,18 +140,26 @@ def new_task():
 @app.route('/complete/<int:task_id>/')
 @login_required
 def complete(task_id):
-    complete_id = task_id
-    db.session.query(Task).filter_by(task_id = complete_id).update({'status': '0'})
-    db.session.commit()
-    flash('Task is complete. Good job!', 'success')
+    task_to_complete_id = task_id
+    task = db.session.query(Task).filter_by(task_id = task_to_complete_id)
+    if session['role'] == 'admin' or session['user_id'] == task.first().user_id:
+        task.update({'status' : '0'})
+        db.session.commit()
+        flash('Task is complete. Good job!', 'success')
+    else:
+        flash('You can only update yours tasks.')
     return redirect(url_for('tasks'))
 
 # Delete a task
 @app.route('/delete/<int:task_id>/')
 @login_required
 def delete(task_id):
-    delete_id = task_id
-    db.session.query(Task).filter_by(task_id = delete_id).delete()
-    db.session.commit()
-    flash('Task deleted!', 'success')
+    task_to_delete_id = task_id
+    task = db.session.query(Task).filter_by(task_id = task_to_delete_id)
+    if session['role'] == 'admin' or session['user_id'] == task.first().user_id:
+        task.delete()
+        db.session.commit()
+        flash('Task deleted!', 'success')    
+    else:
+        flash('You can only delete yours tasks.')
     return redirect(url_for('tasks'))
