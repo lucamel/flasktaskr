@@ -3,6 +3,5 @@ venv
 *.pyc
 __pycache__
 *.DS_Store
-_config.py
 .coverage
 htmlcov
