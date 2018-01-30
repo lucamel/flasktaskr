@@ -64,8 +64,10 @@
                     <td>{{ task.priority }}</td>
                     <td>{{ task.poster.name }}</td>
                     <td>
+                        {% if task.poster.name == session.name or session.role == 'admin' %}
                         <a class="btn btn-xs btn-success" href="{{ url_for('tasks.complete', task_id = task.task_id) }}">Complete</a>
                         <a class="btn btn-xs btn-danger" href="{{ url_for('tasks.delete', task_id = task.task_id) }}">Delete</a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
@@ -99,7 +101,9 @@
                     <td>{{ task.priority }}</td>
                     <td>{{ task.poster.name }}</td>
                     <td>
+                        {% if task.poster.name == session.name or session.role == 'admin' %}
                         <a class="btn btn-xs btn-danger" href="{{ url_for('tasks.delete', task_id = task.task_id) }}">Delete</a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

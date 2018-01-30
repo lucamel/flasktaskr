@@ -14,11 +14,12 @@
                 </a>
             </div>
             <div>
-                <ul class="nav navbar-nav navbar-right">
-                    {% if session['logged_in'] %}
-                        <li><a href="{{ url_for('users.logout') }}">Logout</a></li>
+                <div class="nav navbar-nav navbar-right">
+                    {% if session.logged_in %}
+                        <p class="navbar-text">Welcome, {{ session.name }}</p>
+                        <a class="btn btn-primary btn-sm navbar-btn" href="{{ url_for('users.logout') }}">Logout</a>
                     {% endif %}
-                </ul>
+                </div>
             </div>
         </div>
     </nav>
