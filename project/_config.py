@@ -12,5 +12,5 @@ SECRET_KEY = b'\xb0m\xba$z\xae\xb8\xff\r\x81\x02\x93\xc8\xe8\x04X\x0e\xb8\xdeM\x
 DEBUG = False
 DATABASE_PATH = os.path.join(basedir, DATABASE)
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + DATABASE_PATH
+SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///' + DATABASE_PATH)
 SQLALCHEMY_TRACK_MODIFICATIONS = False
